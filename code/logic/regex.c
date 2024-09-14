@@ -12,6 +12,7 @@
  * -----------------------------------------------------------------------------
  */
 #include "fossil/lib/regex.h"
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
