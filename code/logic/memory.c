@@ -13,6 +13,7 @@
  */
 #include "fossil/lib/memory.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 fossil_memory_t fossil_memory_alloc(size_t size) {
