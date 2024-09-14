@@ -51,7 +51,7 @@ FOSSIL_TEST(test_fossil_regex_match_and_extract) {
     fossil_regex_create(&regex, "extract");
 
     ASSUME_ITS_EQUAL_CSTR(fossil_regex_match_and_extract(&regex, "extract this text"), "extract");
-    ASSUME_ITS_EQUAL_I32(fossil_regex_match_and_extract(&regex, "no match"), NULL);
+    ASSUME_ITS_EQUAL_PTR(fossil_regex_match_and_extract(&regex, "no match"), NULL);
     
     // Test extraction
     ASSUME_ITS_EQUAL_CSTR(fossil_regex_get_matched_substring(&regex), "extract");
@@ -67,7 +67,7 @@ FOSSIL_TEST(test_fossil_regex_reset) {
     ASSUME_ITS_EQUAL_CSTR(fossil_regex_get_matched_substring(&regex), "reset");
 
     fossil_regex_reset(&regex);
-    ASSUME_ITS_EQUAL_I32(fossil_regex_get_matched_substring(&regex), NULL);
+    ASSUME_ITS_EQUAL_PTR(fossil_regex_get_matched_substring(&regex), NULL);
 }
 
 FOSSIL_TEST(test_fossil_regex_limit_pattern_length) {
