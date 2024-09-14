@@ -128,17 +128,6 @@ FOSSIL_TEST(test_memory_is_valid) {
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_debug) {
-    size_t size = 10;
-    fossil_memory_t ptr = fossil_memory_alloc(size);
-    ASSUME_NOT_CNULL(ptr);
-
-    fossil_memory_set(ptr, 0xAA, size);
-    fossil_memory_debug(ptr, size); // No assert here, just for manual debugging purposes
-
-    fossil_memory_free(ptr); // Cleanup
-}
-
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
@@ -153,5 +142,4 @@ FOSSIL_TEST_GROUP(c_memory_tests) {
     ADD_TEST(test_memory_move);
     ADD_TEST(test_memory_resize);
     ADD_TEST(test_memory_is_valid);
-    ADD_TEST(test_memory_debug);
 }

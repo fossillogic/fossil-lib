@@ -160,23 +160,3 @@ bool fossil_memory_is_valid(const fossil_memory_t ptr) {
     // Optional: Add more validation logic if needed, but normally you'd rely on the caller to manage validity.
     return true;
 }
-
-void fossil_memory_debug(const void *ptr, size_t size) {
-    if (!ptr || size == 0) {
-        fprintf(stderr, "Error: fossil_memory_debug() - Invalid pointer or size.\n");
-        return;
-    }
-
-    const unsigned char *byte_ptr = (const unsigned char *)ptr;
-    printf("Memory block at %p of size %zu bytes:\n", (void*)ptr, size);
-
-    for (size_t i = 0; i < size; i++) {
-        printf("%02X ", byte_ptr[i]);
-        if ((i % 16 == 15) || (i == size - 1)) {
-            printf("\n");
-        }
-    }
-    if (size % 16 != 0) {
-        printf("\n");
-    }
-}

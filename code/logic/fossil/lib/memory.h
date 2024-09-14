@@ -144,14 +144,6 @@ fossil_memory_t fossil_memory_resize(fossil_memory_t ptr, size_t old_size, size_
  */
 bool fossil_memory_is_valid(const fossil_memory_t ptr);
 
-/**
- * Debug memory.
- *
- * @param ptr A pointer to the memory.
- * @param size The size of the memory.
- */
-void fossil_memory_debug(const fossil_memory_t ptr, size_t size);
-
 #ifdef __cplusplus
 }
 #endif
