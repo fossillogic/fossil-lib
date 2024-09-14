@@ -94,23 +94,6 @@ fossil_memory_t fossil_memory_dup(const fossil_memory_t src, size_t size);
 void fossil_memory_zero(fossil_memory_t ptr, size_t size);
 
 /**
- * Allocate aligned memory.
- *
- * @param size The size of the memory to allocate.
- * @param alignment The alignment of the memory to allocate.
- * @return A pointer to the allocated memory.
- * @throws Error message and exits if allocation fails or if the size or alignment is invalid.
- */
-fossil_memory_t fossil_memory_alloc_aligned(size_t size, size_t alignment);
-
-/**
- * Frees a previously allocated memory block with alignment.
- *
- * @param ptr  Pointer to the memory block to be freed.
- */
-void fossil_memory_free_aligned(fossil_memory_t ptr);
-
-/**
  * Compare memory.
  *
  * @param ptr1 A pointer to the first memory.

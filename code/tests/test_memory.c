@@ -65,16 +65,6 @@ FOSSIL_TEST(test_memory_zero) {
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_alloc_aligned) {
-    size_t size = 16;
-    size_t alignment = 16; // Alignment to 16 bytes
-    fossil_memory_t ptr = fossil_memory_alloc_aligned(size, alignment);
-    ASSUME_NOT_CNULL(ptr);
-    ASSUME_ITS_TRUE(((uintptr_t)ptr % alignment) == 0); // Ensure alignment
-
-    fossil_memory_free_aligned(ptr); // Cleanup
-}
-
 FOSSIL_TEST(test_memory_compare) {
     size_t size = 10;
     fossil_memory_t ptr1 = fossil_memory_alloc(size);
@@ -137,7 +127,6 @@ FOSSIL_TEST_GROUP(c_memory_tests) {
     ADD_TEST(test_memory_realloc);
     ADD_TEST(test_memory_dup);
     ADD_TEST(test_memory_zero);
-    ADD_TEST(test_memory_alloc_aligned);
     ADD_TEST(test_memory_compare);
     ADD_TEST(test_memory_move);
     ADD_TEST(test_memory_resize);
