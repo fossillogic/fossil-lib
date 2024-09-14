@@ -136,10 +136,18 @@ fossil_memory_t fossil_memory_resize(fossil_memory_t ptr, size_t old_size, size_
         return NULL;
     }
 
+    // Allocate new memory
     fossil_memory_t new_ptr = fossil_memory_realloc(ptr, new_size);
     if (!new_ptr) {
-        fprintf(stderr, "Error: fossil_memory_resize() - Memory resize failed, old memory preserved.\n");
-        return ptr;  // Return the old memory if realloc fails
+        // Allocation failed; return the original memory block
+        fprintf(stderr, "Error: fossil_memory_resize() - Memory resize failed, original memory preserved.\n");
+        return ptr;
+    }
+
+    // Check if new size is larger, and if so, preserve the old data
+    if (new_size > old_size && ptr) {
+        // Initialize new memory with old data (if necessary)
+        memcpy(new_ptr, ptr, old_size);
     }
 
     return new_ptr;
@@ -153,18 +161,22 @@ bool fossil_memory_is_valid(const fossil_memory_t ptr) {
     return true;
 }
 
-void fossil_memory_debug(const fossil_memory_t ptr, size_t size) {
+void fossil_memory_debug(const void *ptr, size_t size) {
     if (!ptr || size == 0) {
         fprintf(stderr, "Error: fossil_memory_debug() - Invalid pointer or size.\n");
         return;
     }
 
-    printf("Memory block at %p of size %zu bytes:\n", ptr, size);
+    const unsigned char *byte_ptr = (const unsigned char *)ptr;
+    printf("Memory block at %p of size %zu bytes:\n", (void*)ptr, size);
+
     for (size_t i = 0; i < size; i++) {
-        printf("%02X ", ((unsigned char*)ptr)[i]);
-        if (i % 16 == 15) {
+        printf("%02X ", byte_ptr[i]);
+        if ((i % 16 == 15) || (i == size - 1)) {
             printf("\n");
         }
     }
-    printf("\n");
+    if (size % 16 != 0) {
+        printf("\n");
+    }
 }
