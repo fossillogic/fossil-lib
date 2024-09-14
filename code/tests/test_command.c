@@ -20,44 +20,43 @@
 // * Fossil Logic Test
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-// Test cases for fossil_command functions
 FOSSIL_TEST(test_fossil_command_success) {
-    ASSUME_ITS_EQUAL_I32(fossil_command_success("success"), 1);
-    ASSUME_ITS_EQUAL_I32(fossil_command_success("failure"), 0);
-    ASSUME_ITS_EQUAL_I32(fossil_command_success("unknown"), 0);
+    // Test known successful command for Meson
+    ASSUME_ITS_EQUAL_I32(fossil_command_success("meson --version"), 1);  // Expect success
+    ASSUME_ITS_EQUAL_I32(fossil_command_success("nonexistent_command"), 0);  // Expect failure
 }
 
 FOSSIL_TEST(test_fossil_command_output) {
     char output[256];
-    
-    ASSUME_ITS_EQUAL_I32(fossil_command_output("success", output, sizeof(output)), 0);
-    ASSUME_ITS_EQUAL_CSTR(output, "Command executed successfully.");
-    
-    ASSUME_ITS_EQUAL_I32(fossil_command_output("failure", output, sizeof(output)), 1);
-    ASSUME_ITS_EQUAL_CSTR(output, "Command failed to execute.");
-    
-    ASSUME_ITS_EQUAL_I32(fossil_command_output("unknown", output, sizeof(output)), -1);
+
+    // Test known successful command for Meson
+    ASSUME_ITS_EQUAL_I32(fossil_command_output("meson --version", output, sizeof(output)), 0);
+    ASSUME_ITS_EQUAL_CSTR(output, "Expected version output here");  // Replace with actual expected output
+
+    // Test a command known to fail
+    ASSUME_ITS_EQUAL_I32(fossil_command_output("nonexistent_command", output, sizeof(output)), 1);
+    ASSUME_ITS_EQUAL_CSTR(output, "Command failed to execute.");  // Replace with actual error message
 }
 
 FOSSIL_TEST(test_fossil_command_exists) {
-    ASSUME_ITS_EQUAL_I32(fossil_command_exists("success"), 1);
-    ASSUME_ITS_EQUAL_I32(fossil_command_exists("failure"), 1);
-    ASSUME_ITS_EQUAL_I32(fossil_command_exists("unknown"), 0);
+    // Test known commands for Meson
+    ASSUME_ITS_EQUAL_I32(fossil_command_exists("meson --version"), 1);  // Command should exist
+    ASSUME_ITS_EQUAL_I32(fossil_command_exists("nonexistent_command"), 0);  // Command should not exist
 }
 
 FOSSIL_TEST(test_fossil_command_erase_exists) {
-    ASSUME_ITS_EQUAL_I32(fossil_command_erase_exists("success"), 1);
-    ASSUME_ITS_EQUAL_I32(fossil_command_erase_exists("failure"), 1);
-    ASSUME_ITS_EQUAL_I32(fossil_command_erase_exists("unknown"), 0);
+    // Test known commands for Meson
+    ASSUME_ITS_EQUAL_I32(fossil_command_erase_exists("meson --version"), 1);  // Command should exist
+    ASSUME_ITS_EQUAL_I32(fossil_command_erase_exists("nonexistent_command"), 0);  // Command should not exist
 }
 
 FOSSIL_TEST(test_fossil_command_strcat_safe) {
     char dest[256] = "Initial ";
     const char *src = "Concatenated";
-    
+
     fossil_command_strcat_safe(dest, src, sizeof(dest));
     ASSUME_ITS_EQUAL_CSTR(dest, "Initial Concatenated");
-    
+
     // Test edge case: concatenation with a buffer that is too small
     char small_dest[10] = "Initial ";
     fossil_command_strcat_safe(small_dest, src, sizeof(small_dest));
