@@ -20,6 +20,10 @@
 #include "hostsys.h"
 #include "memory.h"
 #include "regex.h"
-#include "exit.h"
+
+enum {
+    FOSSIL_SUCCESS = 0,
+    FOSSIL_FAILURE = 1
+};
 
 #endif /* FOSSIL_LIB_FRAMEWORK_H */
