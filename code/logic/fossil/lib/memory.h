@@ -104,6 +104,13 @@ void fossil_memory_zero(fossil_memory_t ptr, size_t size);
 fossil_memory_t fossil_memory_alloc_aligned(size_t size, size_t alignment);
 
 /**
+ * Frees a previously allocated memory block with alignment.
+ *
+ * @param ptr  Pointer to the memory block to be freed.
+ */
+void fossil_memory_free_aligned(fossil_memory_t ptr);
+
+/**
  * Compare memory.
  *
  * @param ptr1 A pointer to the first memory.

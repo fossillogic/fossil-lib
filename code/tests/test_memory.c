@@ -72,7 +72,7 @@ FOSSIL_TEST(test_memory_alloc_aligned) {
     ASSUME_NOT_CNULL(ptr);
     ASSUME_ITS_TRUE(((uintptr_t)ptr % alignment) == 0); // Ensure alignment
 
-    fossil_memory_free(ptr); // Cleanup
+    fossil_memory_free_aligned(ptr); // Cleanup
 }
 
 FOSSIL_TEST(test_memory_compare) {

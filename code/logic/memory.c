@@ -16,6 +16,13 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+#include <malloc.h>  // For _aligned_malloc
+#else
+#include <posix_memalign.h>  // For posix_memalign
+#endif
+
+
 fossil_memory_t fossil_memory_alloc(size_t size) {
     if (size == 0) {
         fprintf(stderr, "Error: fossil_memory_alloc() - Cannot allocate zero bytes.\n");
@@ -102,14 +109,30 @@ fossil_memory_t fossil_memory_alloc_aligned(size_t size, size_t alignment) {
         return NULL;
     }
 
-    void* ptr;
-    int result = posix_memalign(&ptr, alignment, size);  // POSIX
+    void* ptr = NULL;
+
+#ifdef _WIN32
+    ptr = _aligned_malloc(size, alignment);  // Windows-specific function
+    if (ptr == NULL) {
+        fprintf(stderr, "Error: fossil_memory_alloc_aligned() - Memory alignment failed.\n");
+    }
+#else
+    int result = posix_memalign(&ptr, alignment, size);  // POSIX function
     if (result != 0) {
         fprintf(stderr, "Error: fossil_memory_alloc_aligned() - Memory alignment failed.\n");
-        return NULL;
+        ptr = NULL;
     }
+#endif
 
     return ptr;
+}
+
+void fossil_memory_free_aligned(fossil_memory_t ptr) {
+#ifdef _WIN32
+    _aligned_free(ptr);  // Windows-specific function
+#else
+    free(ptr);  // POSIX function
+#endif
 }
 
 int fossil_memory_compare(const fossil_memory_t ptr1, const fossil_memory_t ptr2, size_t size) {
