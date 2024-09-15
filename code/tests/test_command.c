@@ -34,7 +34,7 @@ FOSSIL_TEST(test_fossil_command_output) {
 
 FOSSIL_TEST(test_fossil_command_exists) {
     // Test known commands for Meson
-    ASSUME_ITS_EQUAL_I32(fossil_command_exists("meson --version"), 0);  // Command should exist
+    ASSUME_ITS_EQUAL_I32(fossil_command_exists("meson"), 0);  // Command should exist
 }
 
 FOSSIL_TEST(test_fossil_command_erase_exists) {
