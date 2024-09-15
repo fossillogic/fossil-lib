@@ -209,7 +209,7 @@ void fossil_hostsys_print(fossil_hostsystem_t *info) {
     printf("Version: %s\n", info->os_version);
     printf("CPU Model: %s\n", info->cpu_model);
     printf("CPU Cores: %d\n", info->cpu_cores);
-    printf("Total Memory: %lld MB\n", info->total_memory);
-    printf("Free Memory: %lld MB\n", info->free_memory);
+    printf("Total Memory: %ld MB\n", info->total_memory);
+    printf("Free Memory: %ld MB\n", info->free_memory);
     printf("Endianness: %s\n", fossil_hostsys_endian(info));
 }
