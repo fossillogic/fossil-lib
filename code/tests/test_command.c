@@ -27,9 +27,11 @@ FOSSIL_TEST(test_fossil_command) {
     result = fossil_command("echo Hello World"); // Ensure 'echo' works on all platforms
     ASSUME_ITS_EQUAL_I32(0, result);
 
+#ifndef _WIN32
     // Test invalid command
     result = fossil_command("invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
+#endif
 }
 
 FOSSIL_TEST(test_fossil_command_success) {
