@@ -24,14 +24,12 @@ FOSSIL_TEST(test_fossil_command) {
     int32_t result;
 
     // Test valid command
-    result = fossil_command("echo Hello World"); // Ensure 'echo' works on all platforms
+    result = fossil_command("echo Hello World");
     ASSUME_ITS_EQUAL_I32(0, result);
 
-#ifndef _WIN32
     // Test invalid command
     result = fossil_command("invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
-#endif
 }
 
 FOSSIL_TEST(test_fossil_command_success) {
@@ -41,14 +39,11 @@ FOSSIL_TEST(test_fossil_command_success) {
     result = fossil_command_success("echo Hello World");
     ASSUME_ITS_EQUAL_I32(0, result);
 
-#ifndef _WIN32
     // Test invalid command
     result = fossil_command_success("invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
-#endif
 }
 
-// In a later update commands should return 0 for success and -1 for failure
 FOSSIL_TEST(test_fossil_command_output) {
     char output[128];
     int32_t result;
@@ -56,7 +51,17 @@ FOSSIL_TEST(test_fossil_command_output) {
     // Test valid command
     result = fossil_command_output("echo Hello World", output, sizeof(output));
     ASSUME_ITS_EQUAL_I32(0, result);
+
+#ifdef _WIN32
+    // On Windows, the newline is "\r\n" instead of "\n"
     ASSUME_ITS_EQUAL_CSTR("Hello World\n", output);
+#else
+    ASSUME_ITS_EQUAL_CSTR("Hello World\n", output);
+#endif
+
+    // Test invalid command
+    result = fossil_command_output("invalid_command", output, sizeof(output));
+    ASSUME_ITS_EQUAL_I32(1, result);
 }
 
 FOSSIL_TEST(test_fossil_command_exists) {
@@ -73,10 +78,12 @@ FOSSIL_TEST(test_fossil_command_exists) {
     ASSUME_ITS_EQUAL_I32(0, result);
 
     // Test a non-existing command
-#ifndef _WIN32
-    result = fossil_command_exists("invalid_command");
-    ASSUME_ITS_EQUAL_I32(0, result);
+#ifdef _WIN32
+    result = fossil_command_exists("where invalid_command");
+#else
+    result = fossil_command_exists("which invalid_command");
 #endif
+    ASSUME_ITS_EQUAL_I32(0, result);
 }
 
 FOSSIL_TEST(test_fossil_command_strcat_safe) {
