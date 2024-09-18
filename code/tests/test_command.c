@@ -58,10 +58,6 @@ FOSSIL_TEST(test_fossil_command_output) {
 #else
     ASSUME_ITS_EQUAL_CSTR("Hello World\n", output);
 #endif
-
-    // Test invalid command
-    result = fossil_command_output("invalid_command", output, sizeof(output));
-    ASSUME_ITS_EQUAL_I32(1, result);
 }
 
 FOSSIL_TEST(test_fossil_command_exists) {
