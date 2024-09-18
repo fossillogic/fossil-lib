@@ -3,7 +3,7 @@ if get_option('with_test').enabled()
 
     test_src = ['unit_runner.c']
     test_cubes = [
-        'cnullptr', 'memory', 'hostsys', 'arguments',
+        'cnullptr', 'memory', 'hostsys', 'arguments', 'command',
     ]
 
     foreach cube : test_cubes
