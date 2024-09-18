@@ -48,7 +48,7 @@ int32_t fossil_command_success(fossil_command_t process);
  * @param output_size Size of the output buffer.
  * @return            The result of the command execution.
  */
-int32_t fossil_command_output(fossil_command_t process, char *restrict output, size_t output_size);
+int32_t fossil_command_output(fossil_command_t process, char * output, size_t output_size);
 
 /**
  * Check if a command exists.
@@ -73,7 +73,7 @@ int32_t fossil_command_erase_exists(fossil_command_t path);
  * @param src       The source string to be concatenated.
  * @param dest_size The size of the destination buffer.
  */
-void fossil_command_strcat_safe(char *restrict dest, const char *restrict src, size_t dest_size);
+void fossil_command_strcat_safe(char * dest, const char * src, size_t dest_size);
 
 #ifdef __cplusplus
 }
