@@ -19,7 +19,6 @@
 #include "command.h"
 #include "hostsys.h"
 #include "memory.h"
-#include "regex.h"
 
 enum {
     FOSSIL_SUCCESS = 0,

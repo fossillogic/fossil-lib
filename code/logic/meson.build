@@ -1,7 +1,7 @@
 dir = include_directories('.')
 
 fossil_lib_lib = library('fossil-lib',
-    files('command.c', 'memory.c', 'hostsys.c', 'arguments.c', 'regex.c'),
+    files('command.c', 'memory.c', 'hostsys.c', 'arguments.c'),
     install: true,
     dependencies: [dependency('threads')], # needed for regex threading features
     include_directories: dir)
