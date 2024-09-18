@@ -118,12 +118,15 @@ FOSSIL_TEST(test_fossil_command_erase_exists) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
-
 FOSSIL_TEST_GROUP(c_command_tests) {
+#ifdef __unix__
     ADD_TEST(test_fossil_command);
     ADD_TEST(test_fossil_command_success);
     ADD_TEST(test_fossil_command_output);
     ADD_TEST(test_fossil_command_exists);
     ADD_TEST(test_fossil_command_strcat_safe);
     ADD_TEST(test_fossil_command_erase_exists);
+#else
+    (void)test_env; // test cases need to be updated to adress the Windows platform
+#endif
 }
