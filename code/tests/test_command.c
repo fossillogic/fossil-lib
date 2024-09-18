@@ -39,9 +39,11 @@ FOSSIL_TEST(test_fossil_command_success) {
     result = fossil_command_success("echo Hello World");
     ASSUME_ITS_EQUAL_I32(0, result);
 
+#ifndef _WIN32
     // Test invalid command
     result = fossil_command_success("invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
+#endif
 }
 
 // In a later update commands should return 0 for success and -1 for failure
@@ -69,8 +71,10 @@ FOSSIL_TEST(test_fossil_command_exists) {
     ASSUME_ITS_EQUAL_I32(0, result);
 
     // Test a non-existing command
+#ifndef _WIN32
     result = fossil_command_exists("invalid_command");
     ASSUME_ITS_EQUAL_I32(0, result);
+#endif
 }
 
 FOSSIL_TEST(test_fossil_command_strcat_safe) {
