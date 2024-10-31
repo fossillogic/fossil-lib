@@ -52,9 +52,9 @@ FOSSIL_TEST(test_cnull_definition) {
 // Test cases for cterminator and related constants
 FOSSIL_TEST(test_cterminator_definition) {
     // Check if the terminator constants are defined correctly
-    ASSUME_ITS_EQUAL_CCHAR(cterminator, '\0');
+    ASSUME_ITS_EQUAL_CHAR(cterminator, '\0');
     ASSUME_ITS_EQUAL_WCHAR(wterminator, L'\0');
-    ASSUME_ITS_EQUAL_CCHAR(cterm, '\0');
+    ASSUME_ITS_EQUAL_CHAR(cterm, '\0');
     ASSUME_ITS_EQUAL_WCHAR(wterm, L'\0');
 }
 
