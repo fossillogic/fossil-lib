@@ -12,7 +12,6 @@
  * -----------------------------------------------------------------------------
  */
 #include <fossil/unittest/framework.h>
-#include <fossil/unittest/assume.h>
 
 #include "fossil/lib/framework.h"
 
@@ -25,11 +24,35 @@
 #endif
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
-// * Fossil Logic Test
+// * Fossil Logic Test Utilities
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// Setup steps for things like test fixtures and
+// mock objects are set here.
+// * * * * * * * * * * * * * * * * * * * * * * * *
+
+// Define the test suite and add test cases
+FOSSIL_TEST_SUITE(cpp_null_suite);
+
+// Setup function for the test suite
+FOSSIL_SETUP(cpp_null_suite) {
+    // Setup code here
+}
+
+// Teardown function for the test suite
+FOSSIL_TEARDOWN(cpp_null_suite) {
+    // Teardown code here
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// * Fossil Logic Test Cases
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// The test cases below are provided as samples, inspired
+// by the Meson build system's approach of using test cases
+// as samples for library usage.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
 // Test cases for cnull
-FOSSIL_TEST(test_cnull_definition) {
+FOSSIL_TEST_CASE(cpp_test_cnull_definition) {
     // Test cnull definition
 #if __cplusplus >= 201103L || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L)
     // C++11 or later, C23 or later
@@ -50,7 +73,7 @@ FOSSIL_TEST(test_cnull_definition) {
 }
 
 // Test cases for cterminator and related constants
-FOSSIL_TEST(test_cterminator_definition) {
+FOSSIL_TEST_CASE(cpp_test_cterminator_definition) {
     // Check if the terminator constants are defined correctly
     ASSUME_ITS_EQUAL_CSTR(cterminator, '\0');
     ASSUME_ITS_EQUAL_WSTR(wterminator, L'\0');
@@ -62,7 +85,9 @@ FOSSIL_TEST(test_cterminator_definition) {
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_GROUP(cnull_tests) {
-    ADD_TEST(test_cnull_definition);
-    ADD_TEST(test_cterminator_definition);
+FOSSIL_TEST_GROUP(cpp_null_tests) {
+    FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cnull_definition);
+    FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cterminator_definition);
+
+    FOSSIL_TEST_REGISTER(cpp_null_suite);
 }

@@ -11,16 +11,39 @@
  * Copyright (C) 2024 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/unittest/framework.h>
-#include <fossil/unittest/assume.h>
+#include <fossil/test/framework.h>
 
 #include "fossil/lib/framework.h"
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
-// * Fossil Logic Test
+// * Fossil Logic Test Utilities
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// Setup steps for things like test fixtures and
+// mock objects are set here.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST(test_fossil_arg_parse_has) {
+// Define the test suite and add test cases
+FOSSIL_TEST_SUITE(c_args_suite);
+
+// Setup function for the test suite
+FOSSIL_SETUP(c_args_suite) {
+    // Setup code here
+}
+
+// Teardown function for the test suite
+FOSSIL_TEARDOWN(c_args_suite) {
+    // Teardown code here
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// * Fossil Logic Test Cases
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// The test cases below are provided as samples, inspired
+// by the Meson build system's approach of using test cases
+// as samples for library usage.
+// * * * * * * * * * * * * * * * * * * * * * * * *
+
+FOSSIL_TEST_CASE(c_test_arg_parse_has) {
     // Test fossil_arg_parse_has function
     fossil_option_t options[] = {
         {"option1", COPTION_TYPE_BOOL, {.bool_val = 0}, cnull, 0, 0},
@@ -32,7 +55,7 @@ FOSSIL_TEST(test_fossil_arg_parse_has) {
     ASSUME_ITS_EQUAL_I32(0, fossil_arg_parse_has(options, num_options, "option1"));
 }
 
-FOSSIL_TEST(test_fossil_arg_parse) {
+FOSSIL_TEST_CASE(c_test_arg_parse) {
     // Test fossil_arg_parse function
     const char* argv[] = {"program", "-number", "42", "-name", "John", "-flag", "-choice", "choice2", "-feature", "enable"};
     const int argc = sizeof(argv) / sizeof(argv[0]);
@@ -57,6 +80,8 @@ FOSSIL_TEST(test_fossil_arg_parse) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
 FOSSIL_TEST_GROUP(c_commandline_tests) {
-    ADD_TEST(test_fossil_arg_parse_has);
-    ADD_TEST(test_fossil_arg_parse);
+    FOSSIL_TEST_ADD(c_args_suite, c_test_arg_parse_has);
+    FOSSIL_TEST_ADD(c_args_suite, c_test_arg_parse);
+
+    FOSSIL_TEST_REGISTER(c_args_suite);
 }

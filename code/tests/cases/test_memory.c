@@ -12,22 +12,45 @@
  * -----------------------------------------------------------------------------
  */
 #include <fossil/unittest/framework.h>
-#include <fossil/unittest/assume.h>
 
 #include "fossil/lib/framework.h"
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
-// * Fossil Logic Test
+// * Fossil Logic Test Utilities
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// Setup steps for things like test fixtures and
+// mock objects are set here.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST(test_memory_alloc) {
+// Define the test suite and add test cases
+FOSSIL_TEST_SUITE(c_memory_suite);
+
+// Setup function for the test suite
+FOSSIL_SETUP(c_memory_suite) {
+    // Setup code here
+}
+
+// Teardown function for the test suite
+FOSSIL_TEARDOWN(c_memory_suite) {
+    // Teardown code here
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// * Fossil Logic Test Cases
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// The test cases below are provided as samples, inspired
+// by the Meson build system's approach of using test cases
+// as samples for library usage.
+// * * * * * * * * * * * * * * * * * * * * * * * *
+
+FOSSIL_TEST_CASE(c_test_memory_alloc) {
     size_t size = 10;
     fossil_memory_t ptr = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(ptr);
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_realloc) {
+FOSSIL_TEST_CASE(c_test_memory_realloc) {
     size_t size = 10;
     fossil_memory_t ptr = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(ptr);
@@ -39,7 +62,7 @@ FOSSIL_TEST(test_memory_realloc) {
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_dup) {
+FOSSIL_TEST_CASE(c_test_memory_dup) {
     size_t size = 10;
     fossil_memory_t src = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(src);
@@ -52,7 +75,7 @@ FOSSIL_TEST(test_memory_dup) {
     fossil_memory_free(dest); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_zero) {
+FOSSIL_TEST_CASE(c_test_memory_zero) {
     size_t size = 10;
     fossil_memory_t ptr = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(ptr);
@@ -65,7 +88,7 @@ FOSSIL_TEST(test_memory_zero) {
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_compare) {
+FOSSIL_TEST_CASE(c_test_memory_compare) {
     size_t size = 10;
     fossil_memory_t ptr1 = fossil_memory_alloc(size);
     fossil_memory_t ptr2 = fossil_memory_alloc(size);
@@ -83,7 +106,7 @@ FOSSIL_TEST(test_memory_compare) {
     fossil_memory_free(ptr2); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_move) {
+FOSSIL_TEST_CASE(c_test_memory_move) {
     size_t size = 10;
     fossil_memory_t src = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(src);
@@ -99,7 +122,7 @@ FOSSIL_TEST(test_memory_move) {
     fossil_memory_free(dest); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_resize) {
+FOSSIL_TEST_CASE(c_test_memory_resize) {
     size_t size = 10;
     fossil_memory_t ptr = fossil_memory_alloc(size);
     ASSUME_NOT_CNULL(ptr);
@@ -110,7 +133,7 @@ FOSSIL_TEST(test_memory_resize) {
     fossil_memory_free(ptr); // Cleanup
 }
 
-FOSSIL_TEST(test_memory_is_valid) {
+FOSSIL_TEST_CASE(c_test_memory_is_valid) {
     fossil_memory_t ptr = fossil_memory_alloc(10);
     ASSUME_ITS_TRUE(fossil_memory_is_valid(ptr)); // Should be valid
     ASSUME_ITS_TRUE(!fossil_memory_is_valid(NULL)); // NULL should not be valid
@@ -123,12 +146,14 @@ FOSSIL_TEST(test_memory_is_valid) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
 FOSSIL_TEST_GROUP(c_memory_tests) {
-    ADD_TEST(test_memory_alloc);
-    ADD_TEST(test_memory_realloc);
-    ADD_TEST(test_memory_dup);
-    ADD_TEST(test_memory_zero);
-    ADD_TEST(test_memory_compare);
-    ADD_TEST(test_memory_move);
-    ADD_TEST(test_memory_resize);
-    ADD_TEST(test_memory_is_valid);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_alloc);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_realloc);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_dup);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_zero);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_compare);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_move);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_resize);
+    FOSSIL_TEST_ADD(c_memory_suite, c_test_memory_is_valid);
+
+    FOSSIL_TEST_REGISTER(c_memory_suite);
 }
