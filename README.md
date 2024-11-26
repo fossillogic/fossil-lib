@@ -33,7 +33,7 @@ Before using Fossil Lib, ensure you have the following:
    # ======================
    [wrap-git]
    url = https://github.com/fossillogic/fossil-lib.git
-   revision = v0.1.0
+   revision = v0.1.1
 
    [provide]
    fossil-lib = fossil_lib_dep

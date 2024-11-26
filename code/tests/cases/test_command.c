@@ -11,16 +11,39 @@
  * Copyright (C) 2024 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/unittest/framework.h>
-#include <fossil/xassume.h>
+#include <fossil/test/framework.h>
 
 #include "fossil/lib/framework.h"
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
-// * Fossil Logic Test
+// * Fossil Logic Test Utilities
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// Setup steps for things like test fixtures and
+// mock objects are set here.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST(test_fossil_command) {
+// Define the test suite and add test cases
+FOSSIL_TEST_SUITE(c_command_suite);
+
+// Setup function for the test suite
+FOSSIL_SETUP(c_command_suite) {
+    // Setup code here
+}
+
+// Teardown function for the test suite
+FOSSIL_TEARDOWN(c_command_suite) {
+    // Teardown code here
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// * Fossil Logic Test Cases
+// * * * * * * * * * * * * * * * * * * * * * * * *
+// The test cases below are provided as samples, inspired
+// by the Meson build system's approach of using test cases
+// as samples for library usage.
+// * * * * * * * * * * * * * * * * * * * * * * * *
+
+FOSSIL_TEST_CASE(c_test_command) {
     int32_t result;
 
     // Test valid command
@@ -32,7 +55,7 @@ FOSSIL_TEST(test_fossil_command) {
     ASSUME_NOT_EQUAL_I32(0, result);
 }
 
-FOSSIL_TEST(test_fossil_command_success) {
+FOSSIL_TEST_CASE(c_test_command_success) {
     int32_t result;
 
     // Test valid command
@@ -44,7 +67,7 @@ FOSSIL_TEST(test_fossil_command_success) {
     ASSUME_NOT_EQUAL_I32(0, result);
 }
 
-FOSSIL_TEST(test_fossil_command_output) {
+FOSSIL_TEST_CASE(c_test_command_output) {
     char output[128];
     int32_t result;
 
@@ -60,7 +83,7 @@ FOSSIL_TEST(test_fossil_command_output) {
 #endif
 }
 
-FOSSIL_TEST(test_fossil_command_exists) {
+FOSSIL_TEST_CASE(c_test_command_exists) {
     int32_t result;
 
 #ifdef _WIN32
@@ -82,7 +105,7 @@ FOSSIL_TEST(test_fossil_command_exists) {
     ASSUME_ITS_EQUAL_I32(0, result);
 }
 
-FOSSIL_TEST(test_fossil_command_strcat_safe) {
+FOSSIL_TEST_CASE(c_test_command_strcat_safe) {
     char buffer[16];
 
     // Initialize buffer
@@ -97,7 +120,7 @@ FOSSIL_TEST(test_fossil_command_strcat_safe) {
     ASSUME_ITS_EQUAL_CSTR("Hello World1234", buffer);
 }
 
-FOSSIL_TEST(test_fossil_command_erase_exists) {
+FOSSIL_TEST_CASE(c_test_command_erase_exists) {
     int32_t result;
 
 #ifdef _WIN32
@@ -120,13 +143,20 @@ FOSSIL_TEST(test_fossil_command_erase_exists) {
 // * * * * * * * * * * * * * * * * * * * * * * * *
 FOSSIL_TEST_GROUP(c_command_tests) {
 #ifdef __unix__
-    ADD_TEST(test_fossil_command);
-    ADD_TEST(test_fossil_command_success);
-    ADD_TEST(test_fossil_command_output);
-    ADD_TEST(test_fossil_command_exists);
-    ADD_TEST(test_fossil_command_strcat_safe);
-    ADD_TEST(test_fossil_command_erase_exists);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command_success);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command_output);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command_exists);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command_strcat_safe);
+    FOSSIL_TEST_ADD(c_command_suite, c_test_command_erase_exists);
 #else
-    (void)test_env; // test cases need to be updated to adress the Windows platform
+    // test cases need to be updated to adress the Windows platform
+    FOSSIL_TEST_SKIP(c_test_command, "Test case not supported on Windows");
+    FOSSIL_TEST_SKIP(c_test_command_success, "Test case not supported on Windows");
+    FOSSIL_TEST_SKIP(c_test_command_output, "Test case not supported on Windows");
+    FOSSIL_TEST_SKIP(c_test_command_exists, "Test case not supported on Windows");
+    FOSSIL_TEST_SKIP(c_test_command_strcat_safe, "Test case not supported on Windows");
+    FOSSIL_TEST_SKIP(c_test_command_erase_exists, "Test case not supported on Windows");
 #endif
+    FOSSIL_TEST_REGISTER(c_command_suite);
 }
