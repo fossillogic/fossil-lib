@@ -11,7 +11,7 @@
  * Copyright (C) 2024 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#include <fossil/unittest/framework.h>
+#include <fossil/test/framework.h>
 
 #include "fossil/lib/framework.h"
 
