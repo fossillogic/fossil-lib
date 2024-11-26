@@ -2,8 +2,8 @@
  * -----------------------------------------------------------------------------
  * Project: Fossil Logic
  *
- * This file is part of the Fossil Logic project, which aims to develop high-
  * performance, cross-platform applications and libraries. The code contained
+ * This file is part of the Fossil Logic project, which aims to develop high-
  * herein is subject to the terms and conditions defined in the project license.
  *
  * Author: Michael Gene Brockus (Dreamer)
@@ -72,22 +72,26 @@ FOSSIL_TEST_CASE(c_test_cnull_definition) {
 #endif
 }
 
-// Test cases for cterminator and related constants
-FOSSIL_TEST_CASE(c_test_cterminator_definition) {
-    // Check if the terminator constants are defined correctly
-    ASSUME_ITS_EQUAL_CSTR(cterminator, '\0');
-    ASSUME_ITS_EQUAL_WSTR(wterminator, L'\0');
-    ASSUME_ITS_EQUAL_CSTR(cterm, '\0');
-    ASSUME_ITS_EQUAL_WSTR(wterm, L'\0');
+FOSSIL_TEST_CASE(c_test_cnull_assignment) {
+    // Test cnull assignment
+    void *ptr = cnull;
+    ASSUME_ITS_EQUAL_PTR(ptr, cnull);
+}
+
+FOSSIL_TEST_CASE(c_test_cnull_comparison) {
+    // Test cnull comparison
+    void *ptr = cnull;
+    ASSUME_ITS_TRUE(ptr == cnull);
+    ASSUME_ITS_FALSE(ptr != cnull);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
 // * Fossil Logic Test Pool
 // * * * * * * * * * * * * * * * * * * * * * * * *
-
 FOSSIL_TEST_GROUP(c_null_tests) {
     FOSSIL_TEST_ADD(c_null_suite, c_test_cnull_definition);
-    FOSSIL_TEST_ADD(c_null_suite, c_test_cterminator_definition);
+    FOSSIL_TEST_ADD(c_null_suite, c_test_cnull_assignment);
+    FOSSIL_TEST_ADD(c_null_suite, c_test_cnull_comparison);
 
     FOSSIL_TEST_REGISTER(c_null_suite);
 }

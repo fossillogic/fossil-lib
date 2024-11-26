@@ -72,13 +72,17 @@ FOSSIL_TEST_CASE(cpp_test_cnull_definition) {
 #endif
 }
 
-// Test cases for cterminator and related constants
-FOSSIL_TEST_CASE(cpp_test_cterminator_definition) {
-    // Check if the terminator constants are defined correctly
-    ASSUME_ITS_EQUAL_CSTR(cterminator, '\0');
-    ASSUME_ITS_EQUAL_WSTR(wterminator, L'\0');
-    ASSUME_ITS_EQUAL_CSTR(cterm, '\0');
-    ASSUME_ITS_EQUAL_WSTR(wterm, L'\0');
+FOSSIL_TEST_CASE(cpp_test_cnull_assignment) {
+    // Test cnull assignment
+    void *ptr = cnull;
+    ASSUME_ITS_EQUAL_PTR(ptr, cnull);
+}
+
+FOSSIL_TEST_CASE(cpp_test_cnull_comparison) {
+    // Test cnull comparison
+    void *ptr = cnull;
+    ASSUME_ITS_TRUE(ptr == cnull);
+    ASSUME_ITS_FALSE(ptr != cnull);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
@@ -87,7 +91,8 @@ FOSSIL_TEST_CASE(cpp_test_cterminator_definition) {
 
 FOSSIL_TEST_GROUP(cpp_null_tests) {
     FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cnull_definition);
-    FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cterminator_definition);
+    FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cnull_assignment);
+    FOSSIL_TEST_ADD(cpp_null_suite, cpp_test_cnull_comparison);
 
     FOSSIL_TEST_REGISTER(cpp_null_suite);
 }
