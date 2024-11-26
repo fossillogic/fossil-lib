@@ -47,11 +47,11 @@ FOSSIL_TEST_CASE(cpp_test_command) {
     int32_t result;
 
     // Test valid command
-    result = fossil_command("echo Hello World");
+    result = fossil_command((char *)"echo Hello World");
     ASSUME_ITS_EQUAL_I32(0, result);
 
     // Test invalid command
-    result = fossil_command("invalid_command");
+    result = fossil_command((char *)"invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
 }
 
@@ -59,11 +59,11 @@ FOSSIL_TEST_CASE(cpp_test_command_success) {
     int32_t result;
 
     // Test valid command
-    result = fossil_command_success("echo Hello World");
+    result = fossil_command_success((char *)"echo Hello World");
     ASSUME_ITS_EQUAL_I32(0, result);
 
     // Test invalid command
-    result = fossil_command_success("invalid_command");
+    result = fossil_command_success((char *)"invalid_command");
     ASSUME_NOT_EQUAL_I32(0, result);
 }
 
@@ -72,7 +72,7 @@ FOSSIL_TEST_CASE(cpp_test_command_output) {
     int32_t result;
 
     // Test valid command
-    result = fossil_command_output("echo Hello World", output, sizeof(output));
+    result = fossil_command_output((char *)"echo Hello World", output, sizeof(output));
     ASSUME_ITS_EQUAL_I32(0, result);
 
 #ifdef _WIN32
@@ -88,19 +88,19 @@ FOSSIL_TEST_CASE(cpp_test_command_exists) {
 
 #ifdef _WIN32
     // Use "where" on Windows
-    result = fossil_command_exists("where echo");
+    result = fossil_command_exists((char *)"where echo");
 #else
     // Use "which" on Unix-like systems
-    result = fossil_command_exists("which echo");
+    result = fossil_command_exists((char *)"which echo");
 #endif
 
     ASSUME_ITS_EQUAL_I32(0, result);
 
     // Test a non-existing command
 #ifdef _WIN32
-    result = fossil_command_exists("where invalid_command");
+    result = fossil_command_exists((char *)"where invalid_command");
 #else
-    result = fossil_command_exists("which invalid_command");
+    result = fossil_command_exists((char *)"which invalid_command");
 #endif
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -112,11 +112,11 @@ FOSSIL_TEST_CASE(cpp_test_command_strcat_safe) {
     strcpy(buffer, "Hello");
 
     // Test appending within buffer limits
-    fossil_command_strcat_safe(buffer, " World", sizeof(buffer));
+    fossil_command_strcat_safe(buffer, (char *)" World", sizeof(buffer));
     ASSUME_ITS_EQUAL_CSTR("Hello World", buffer);
 
     // Test appending with truncation
-    fossil_command_strcat_safe(buffer, "12345678901234567890", sizeof(buffer));
+    fossil_command_strcat_safe(buffer, (char *)"12345678901234567890", sizeof(buffer));
     ASSUME_ITS_EQUAL_CSTR("Hello World1234", buffer);
 }
 
@@ -125,16 +125,16 @@ FOSSIL_TEST_CASE(cpp_test_command_erase_exists) {
 
 #ifdef _WIN32
     // Use a different path on Windows, e.g., "C:\\"
-    result = fossil_command_erase_exists("C:\\");
+    result = fossil_command_erase_exists((char *)"C:\\");
 #else
     // Use "/tmp" on Unix-like systems
-    result = fossil_command_erase_exists("/tmp");
+    result = fossil_command_erase_exists((char *)"/tmp");
 #endif
 
     ASSUME_ITS_EQUAL_I32(1, result);
 
     // Test non-existing directory
-    result = fossil_command_erase_exists("non_existing_directory");
+    result = fossil_command_erase_exists((char *)"non_existing_directory");
     ASSUME_ITS_EQUAL_I32(0, result);
 }
 
