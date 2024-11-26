@@ -48,12 +48,18 @@ FOSSIL_TEST_CASE(cpp_test_arg_parse_has) {
     fossil_option_t option1;
     option1.name = "option1";
     option1.type = COPTION_TYPE_BOOL;
+    option1.num_choices = 0;
     option1.value.bool_val = 0;
+    option1.extra_data = cnull;
+    option1.parsed = 0;
 
     fossil_option_t option2;
     option2.name = "option2";
     option2.type = COPTION_TYPE_INT;
+    option2.num_choices = 0;
     option2.value.int_val = 42;
+    option2.extra_data = cnull;
+    option2.parsed = 0;
 
     fossil_option_t options[] = {option1, option2};
     int num_options = sizeof(options) / sizeof(options[0]);
@@ -73,11 +79,17 @@ FOSSIL_TEST_CASE(cpp_test_arg_parse) {
     option1.name = "option1";
     option1.type = COPTION_TYPE_INT;
     option1.value.int_val = 0;
+    option1.num_choices = 0;
+    option1.extra_data = cnull;
+    option1.parsed = 0;
 
     fossil_option_t option2;
     option2.name = "option2";
     option2.type = COPTION_TYPE_BOOL;
+    option2.num_choices = 0;
     option2.value.bool_val = 0;
+    option2.extra_data = cnull;
+    option2.parsed = 0;
 
     fossil_option_t options[] = {option1, option2};
     int num_options = sizeof(options) / sizeof(options[0]);
