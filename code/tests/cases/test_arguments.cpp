@@ -45,10 +45,17 @@ FOSSIL_TEARDOWN(cpp_args_suite) {
 
 FOSSIL_TEST_CASE(cpp_test_arg_parse_has) {
     // Test fossil_arg_parse_has function
-    fossil_option_t options[] = {
-        {"option1", COPTION_TYPE_BOOL, {.bool_val = 0}, cnull, 0, 0},
-        {"option2", COPTION_TYPE_INT, {.int_val = 42}, cnull, 0, 0}
-    };
+    fossil_option_t option1;
+    option1.name = "option1";
+    option1.type = COPTION_TYPE_BOOL;
+    option1.value.bool_val = 0;
+
+    fossil_option_t option2;
+    option2.name = "option2";
+    option2.type = COPTION_TYPE_INT;
+    option2.value.int_val = 42;
+
+    fossil_option_t options[] = {option1, option2};
     int num_options = sizeof(options) / sizeof(options[0]);
 
     // Assuming fossil_arg_parse_has returns 1 for the existing option
@@ -62,10 +69,17 @@ FOSSIL_TEST_CASE(cpp_test_arg_parse) {
 
     fossil_command_line_t cmd = {argc, (char **)argv};
     
-    fossil_option_t options[] = {
-        {"option1", COPTION_TYPE_INT, {.int_val = 0}, cnull, 0, 0},
-        {"option2", COPTION_TYPE_BOOL, {.bool_val = 0}, cnull, 0, 0}
-    };
+    fossil_option_t option1;
+    option1.name = "option1";
+    option1.type = COPTION_TYPE_INT;
+    option1.value.int_val = 0;
+
+    fossil_option_t option2;
+    option2.name = "option2";
+    option2.type = COPTION_TYPE_BOOL;
+    option2.value.bool_val = 0;
+
+    fossil_option_t options[] = {option1, option2};
     int num_options = sizeof(options) / sizeof(options[0]);
 
     // Assuming fossil_arg_parse modifies the options array
