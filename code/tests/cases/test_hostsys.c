@@ -23,15 +23,15 @@
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
 // Define the test suite and add test cases
-FOSSIL_TEST_SUITE(c_host_suite);
+FOSSIL_TEST_SUITE(c_hostsys_suite);
 
 // Setup function for the test suite
-FOSSIL_SETUP(c_host_suite) {
+FOSSIL_SETUP(c_hostsys_suite) {
     // Setup code here
 }
 
 // Teardown function for the test suite
-FOSSIL_TEARDOWN(c_host_suite) {
+FOSSIL_TEARDOWN(c_hostsys_suite) {
     // Teardown code here
 }
 
